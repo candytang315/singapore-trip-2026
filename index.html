@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>新加坡家族旅行</title>
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#FBF6EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+<style>
+:root{
+  --bg:#F7F4EB;
+  --card:#FFFFFF;
+  --ink:#3A3530;
+  --ink-soft:#8A8275;
+  --line:#E0E5D5;
+  --accent:#C9694F;
+  --accent-soft:#F1DCD2;
+  --green:#7A8B6F;
+  --green-soft:#E6EBDD;
+  --blue:#6F89A8;
+  --blue-soft:#DEE6ED;
+  --gold:#C9A24B;
+  --gold-soft:#F0E5C9;
+  --shadow: 4px 4px 0px var(--line);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+body{
+  margin:0;
+  font-family:'Noto Sans TC','Zen Maru Gothic',sans-serif;
+  background-color:#FBF6EC;
+  background-image:
+    radial-gradient(ellipse 480px 420px at 12% 95%, rgba(242,182,198,0.45), transparent 70%),
+    radial-gradient(ellipse 420px 360px at 30% 75%, rgba(188,227,176,0.4), transparent 70%),
+    radial-gradient(ellipse 400px 360px at 18% 35%, rgba(159,211,232,0.4), transparent 70%),
+    radial-gradient(ellipse 460px 400px at 78% 15%, rgba(245,224,140,0.4), transparent 70%),
+    radial-gradient(ellipse 420px 400px at 92% 55%, rgba(242,182,198,0.4), transparent 70%),
+    radial-gradient(ellipse 380px 320px at 68% 85%, rgba(159,211,232,0.35), transparent 70%),
+    radial-gradient(ellipse 320px 280px at 55% 40%, rgba(188,227,176,0.35), transparent 70%);
+  color:var(--ink);
+  min-height:100vh;
+  padding-bottom:84px;
+  position:relative;
+}
+.app{max-width:480px; margin:0 auto; min-height:100vh; position:relative;}
+
+/* Header */
+.topbar{
+  padding:0 0 14px;
+  position:relative;
+  background:transparent;
+}
+.sousou-strip{display:none;}
+.topbar-row{display:flex; align-items:center; justify-content:space-between; padding:22px 18px 0;}
+.brand{display:flex; align-items:center; gap:10px;}
+.brand-icon{
+  width:38px; height:38px; border-radius:12px;
+  background:#3F6B8C; color:#fff; position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; box-shadow:var(--shadow);
+}
+.brand-icon::after{
+  content:''; position:absolute; right:-6px; bottom:-6px; width:18px; height:18px;
+  background:#D9824B; border-radius:50%; opacity:.9;
+}
+.brand-text h1{font-size:16px; margin:0; font-weight:900; letter-spacing:.5px;}
+.brand-text p{font-size:11px; margin:1px 0 0; color:var(--ink-soft);}
+.countdown{
+  background:var(--card); border-radius:16px; padding:6px 12px;
+  box-shadow:var(--shadow); text-align:center; min-width:62px;
+}
+.countdown .num{font-size:18px; font-weight:900; color:var(--accent); line-height:1.1;}
+.countdown .lbl{font-size:9px; color:var(--ink-soft);}
+
+/* Tabs content area */
+.view{padding:6px 18px 18px; display:none;}
+.view.active{display:block;}
+
+/* Section title */
+.sec-title{
+  font-size:13px; font-weight:700; color:var(--ink-soft);
+  margin:18px 2px 10px; display:flex; align-items:center; gap:6px;
+}
+.sec-title i{font-size:12px;}
+
+/* Date scroller */
+.date-scroll{
+  display:flex; gap:8px; overflow-x:auto; padding:4px 2px 12px;
+  scrollbar-width:none;
+}
+.date-scroll::-webkit-scrollbar{display:none;}
+.date-chip{
+  flex:0 0 auto; width:64px; height:64px; padding:0; border-radius:16px;
+  background:var(--card); text-align:center; cursor:pointer;
+  box-shadow:var(--shadow); border:2px solid transparent;
+  transition:transform .15s; position:relative; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+}
+.date-chip.active{border-color:#3F6B8C; background:#FBF3E7;}
+.date-chip.active::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background:#3F6B8C; opacity:0.5;
+}
+.date-chip:active{transform:scale(.95);}
+.date-chip .daynum{font-size:9px; color:var(--accent); font-weight:900; letter-spacing:.5px;}
+.date-chip .day{font-size:17px; font-weight:900; line-height:1.1;}
+.date-chip .dow{font-size:10px; color:var(--ink-soft); font-weight:700;}
+
+/* Weather card */
+.weather-card{
+  background:linear-gradient(135deg,#EDE7D3,#F7F4EB); border-radius:22px; padding:18px 18px 16px;
+  box-shadow:var(--shadow); margin-bottom:16px;
+}
+.weather-top{display:flex; align-items:flex-start; justify-content:space-between;}
+.weather-loc-tag{
+  display:flex; align-items:center; gap:5px; font-size:10.5px; color:var(--ink-soft);
+  font-weight:700; letter-spacing:.5px;
+}
+.weather-desc-row{display:flex; align-items:center; gap:8px; margin-top:8px;}
+.weather-desc-main{font-size:19px; font-weight:900;}
+.weather-icon{font-size:24px; color:var(--gold);}
+.weather-temp-big{font-size:32px; font-weight:900; color:var(--ink); line-height:1;}
+.weather-temp-range{font-size:11px; color:var(--ink-soft); margin-top:3px;}
+.weather-stats{display:flex; gap:8px; margin-top:14px;}
+.weather-stat{
+  flex:1; background:rgba(255,255,255,.65); border-radius:14px; padding:10px 6px;
+  text-align:center;
+}
+.weather-stat i{font-size:14px; color:var(--blue); margin-bottom:4px; display:block;}
+.weather-stat .val{font-size:13px; font-weight:900;}
+.weather-stat .lbl{font-size:9px; color:var(--ink-soft); margin-top:1px;}
+.weather-advice{
+  margin-top:12px; background:rgba(255,255,255,.7); border-radius:14px; padding:10px 12px;
+  display:flex; gap:8px; align-items:flex-start;
+}
+.weather-advice i{color:var(--accent); font-size:13px; margin-top:2px;}
+.weather-advice-text{font-size:11.5px; line-height:1.6;}
+.weather-advice-text b{display:block; font-size:10px; color:var(--accent); margin-bottom:2px; letter-spacing:.5px;}
+
+
+/* Timeline */
+.timeline{position:relative; padding-left:6px;}
+.tl-item{
+  display:flex; gap:12px; margin-bottom:14px; cursor:pointer;
+}
+.tl-time{
+  flex:0 0 52px; font-size:12px; font-weight:900; color:var(--ink-soft);
+  padding-top:14px; text-align:right;
+}
+.tl-line{flex:0 0 20px; display:flex; flex-direction:column; align-items:center;}
+.tl-dot{
+  width:14px; height:14px; border-radius:50%; margin-top:14px;
+  border:3px solid var(--card); box-shadow:0 0 0 2px var(--cat-color);
+  background:var(--cat-color);
+}
+.tl-bar{flex:1; width:2px; background:var(--line); margin-top:4px; border-radius:2px;}
+.tl-card{
+  flex:1; background:var(--card); border-radius:18px; padding:13px 15px;
+  box-shadow:var(--shadow);
+}
+.tl-card:active{transform:scale(.98);}
+.tl-cat{
+  display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:700;
+  padding:3px 9px; border-radius:20px; margin-bottom:7px;
+}
+.tl-title{font-size:14px; font-weight:700; margin:0 0 3px;}
+.tl-sub{font-size:11.5px; color:var(--ink-soft); margin:0; line-height:1.5;}
+.tl-note{
+  margin-top:7px; font-size:11px; color:var(--accent); background:var(--accent-soft);
+  border-radius:10px; padding:6px 9px; display:flex; gap:6px; align-items:flex-start;
+}
+
+/* category colors */
+.cat-food{--cat-color:var(--accent); background:var(--accent-soft); color:var(--accent);}
+.cat-spot{--cat-color:var(--green); background:var(--green-soft); color:var(--green);}
+.cat-transport{--cat-color:var(--blue); background:var(--blue-soft); color:var(--blue);}
+.cat-stay{--cat-color:var(--gold); background:var(--gold-soft); color:#9c7a1f;}
+
+/* Booking cards */
+.boarding-pass{
+  background:linear-gradient(135deg,#2C2A28,#3A3633); color:#F7F4EB;
+  border-radius:20px; padding:18px; margin-bottom:14px; position:relative;
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.boarding-pass::after{
+  content:''; position:absolute; right:-14px; top:50%; transform:translateY(-50%);
+  width:28px; height:28px; background:var(--bg); border-radius:50%;
+}
+.bp-top{display:flex; justify-content:space-between; align-items:flex-start;}
+.bp-airline{font-size:11px; opacity:.7; letter-spacing:1px;}
+.bp-flight{font-size:20px; font-weight:900; margin-top:2px;}
+.bp-route{display:flex; align-items:center; justify-content:space-between; margin:16px 0 10px;}
+.bp-city{font-size:24px; font-weight:900;}
+.bp-city-sub{font-size:10px; opacity:.6;}
+.bp-plane{font-size:14px; opacity:.5;}
+.bp-bottom{display:flex; justify-content:space-between; border-top:1px dashed rgba(247,244,235,.25); padding-top:10px; margin-top:8px;}
+.bp-field{font-size:9px; opacity:.6;}
+.bp-field b{display:block; font-size:13px; opacity:1; font-weight:700; margin-top:2px;}
+
+.booking-card{
+  background:var(--card); border-radius:18px; padding:15px 16px; margin-bottom:14px;
+  box-shadow:var(--shadow);
+}
+.bk-head{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+.bk-icon{
+  width:34px; height:34px; border-radius:11px; display:flex; align-items:center;
+  justify-content:center; font-size:14px; flex:0 0 34px;
+}
+.bk-title{font-size:14px; font-weight:700;}
+.bk-sub{font-size:10.5px; color:var(--ink-soft);}
+.bk-row{
+  display:flex; justify-content:space-between; font-size:12px; padding:6px 0;
+  border-top:1px solid #F2EFE3;
+}
+.bk-row .k{color:var(--ink-soft);}
+.bk-row .v{font-weight:700; text-align:right;}
+.bk-split{
+  margin-top:10px; background:var(--green-soft); border-radius:12px; padding:9px 12px;
+  display:flex; justify-content:space-between; align-items:center; font-size:12px;
+}
+.bk-split b{color:var(--green); font-size:14px;}
+
+/* Todo */
+.todo-card{
+  background:var(--card); border-radius:16px; padding:13px 15px; margin-bottom:10px;
+  box-shadow:var(--shadow); display:flex; align-items:center; gap:12px;
+}
+.todo-check{
+  width:24px; height:24px; border-radius:8px; border:2px solid var(--line);
+  flex:0 0 24px; display:flex; align-items:center; justify-content:center;
+  font-size:12px; color:transparent; cursor:pointer; transition:.15s;
+}
+.todo-check.done{background:var(--green); border-color:var(--green); color:#fff;}
+.todo-text{flex:1; font-size:13.5px; font-weight:500;}
+.todo-text.done{text-decoration:line-through; color:var(--ink-soft);}
+.todo-due{font-size:10px; color:var(--accent); font-weight:700; background:var(--accent-soft); padding:3px 8px; border-radius:20px;}
+.shop-thumb{
+  width:42px; height:42px; border-radius:10px; object-fit:contain; flex:0 0 42px; cursor:pointer;
+  background:#F2EFE3;
+}
+
+/* Bottom nav */
+.bottomnav{
+  position:fixed; bottom:0; left:0; right:0; z-index:40;
+  display:flex; justify-content:center;
+}
+.bottomnav-inner{
+  width:100%; max-width:480px; background:var(--card);
+  border-radius:24px 24px 0 0; box-shadow:0 -4px 18px rgba(0,0,0,.06);
+  display:flex; padding:10px 6px calc(10px + env(safe-area-inset-bottom));
+  position:relative; overflow:hidden;
+}
+.bottomnav-inner::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:#3F6B8C; opacity:0.5;
+}
+.nav-btn{
+  flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+  padding:6px 0; border-radius:14px; cursor:pointer; color:var(--ink-soft);
+  transition:.15s; position:relative;
+}
+.nav-btn:active{transform:scale(.93);}
+.nav-btn.active{color:#fff; background:#3F6B8C;}
+.nav-btn i{font-size:17px;}
+.nav-btn span{font-size:10px; font-weight:700;}
+
+/* Modal */
+.modal-bg{
+  position:fixed; inset:0; background:rgba(58,53,48,.5); z-index:50;
+  display:none; align-items:flex-end; justify-content:center;
+}
+.modal-bg.open{display:flex;}
+.modal-sheet{
+  width:100%; max-width:480px; background:var(--bg); border-radius:24px 24px 0 0;
+  padding:20px 20px calc(20px + env(safe-area-inset-bottom)); max-height:80vh; overflow-y:auto;
+  animation:slideUp .25s ease;
+}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.modal-handle{width:40px; height:4px; background:var(--line); border-radius:4px; margin:0 auto 16px;}
+.modal-close{
+  position:absolute; right:18px; top:18px; width:30px; height:30px; border-radius:50%;
+  background:var(--card); display:flex; align-items:center; justify-content:center;
+  box-shadow:var(--shadow); color:var(--ink-soft); cursor:pointer;
+}
+
+.empty-state{text-align:center; padding:40px 20px; color:var(--ink-soft);}
+.empty-state i{font-size:30px; margin-bottom:10px; opacity:.4;}
+.empty-state p{font-size:12.5px;}
+
+/* Hotel photo */
+.bk-photo{
+  width:100%; height:140px; border-radius:14px; object-fit:cover;
+  margin-bottom:12px; background:var(--bg);
+}
+
+/* Expense dashboard */
+.expense-dashboard{
+  background:linear-gradient(135deg, var(--accent), #B85A40); color:#fff;
+  border-radius:20px; padding:20px 18px; margin-bottom:18px; box-shadow:var(--shadow);
+}
+.expense-total-lbl{font-size:11px; opacity:.8;}
+.expense-total-num{font-size:30px; font-weight:900; margin:4px 0 2px;}
+.expense-total-sub{font-size:11px; opacity:.75;}
+.expense-cats{display:flex; gap:8px; margin-top:14px; overflow-x:auto;}
+.expense-cat-chip{
+  background:rgba(255,255,255,.18); border-radius:12px; padding:7px 11px;
+  font-size:11px; white-space:nowrap; flex:0 0 auto;
+}
+.expense-cat-chip b{display:block; font-size:13px; margin-top:1px;}
+
+/* Expense item */
+.exp-item{
+  background:var(--card); border-radius:16px; padding:12px 14px; margin-bottom:10px;
+  box-shadow:var(--shadow); display:flex; align-items:center; gap:12px;
+}
+.exp-icon{
+  width:38px; height:38px; border-radius:12px; flex:0 0 38px;
+  display:flex; align-items:center; justify-content:center; font-size:15px;
+}
+.exp-mid{flex:1; min-width:0;}
+.exp-title{font-size:13.5px; font-weight:700;}
+.exp-sub{font-size:10.5px; color:var(--ink-soft); margin-top:1px;}
+.exp-amt{text-align:right; flex:0 0 auto;}
+.exp-amt-jpy{font-size:14px; font-weight:900;}
+.exp-amt-twd{font-size:10px; color:var(--ink-soft);}
+.exp-del{color:#D9A0A0; font-size:13px; padding:4px;}
+
+.date-divider{font-size:11px; color:var(--ink-soft); font-weight:700; margin:14px 2px 8px; display:flex; align-items:center; gap:8px;}
+.date-divider::after{content:''; flex:1; height:1px; background:var(--line);}
+
+
+.add-fab{
+  position:fixed; right:18px; bottom:92px; z-index:35;
+  width:52px; height:52px; border-radius:50%; background:var(--accent); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:18px;
+  box-shadow:0 6px 16px rgba(201,105,79,.4); cursor:pointer; border:none;
+}
+.add-fab:active{transform:scale(.92);}
+
+input, textarea, select{
+  width:100%; border:2px solid var(--line); border-radius:12px; padding:10px 12px;
+  font-size:13px; font-family:inherit; background:#fff; color:var(--ink); margin-bottom:10px;
+}
+input:focus, textarea:focus, select:focus{outline:none; border-color:var(--accent);}
+label{font-size:11px; font-weight:700; color:var(--ink-soft); margin-bottom:4px; display:block;}
+.btn-primary{
+  width:100%; background:var(--accent); color:#fff; border:none; border-radius:14px;
+  padding:13px; font-size:14px; font-weight:700; cursor:pointer; box-shadow:var(--shadow);
+}
+.btn-primary:active{transform:scale(.98);}
+
+
+/* ===== 新加坡版新增樣式 ===== */
+.brand{cursor:pointer;}
+.brand-icon::after{background:#D2483C;}
+.sync-pill{
+  display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:700;
+  padding:3px 8px; border-radius:20px; margin-top:4px; background:var(--green-soft); color:var(--green);
+  cursor:default;
+}
+.sync-pill.saving{background:var(--blue-soft); color:var(--blue);}
+.sync-pill.error{background:var(--accent-soft); color:var(--accent); cursor:pointer;}
+.trip-meta{
+  margin:10px 18px 0; background:rgba(255,255,255,.7); border-radius:14px; padding:9px 12px;
+  font-size:11.5px; line-height:1.6; color:var(--ink-soft); box-shadow:var(--shadow);
+}
+.trip-meta b{color:var(--ink);}
+.date-chip .tag{font-size:8.5px; color:#fff; background:var(--accent); border-radius:6px; padding:0 4px; margin-top:1px;}
+.weather-source{font-size:9.5px; color:var(--ink-soft); margin-top:8px; text-align:right;}
+.boarding-pass, .booking-card.tap{cursor:pointer;}
+.boarding-pass:active, .booking-card.tap:active{transform:scale(.98);}
+.bk-note{margin-top:8px; font-size:11px; line-height:1.6; color:var(--ink-soft); background:#F7F4EB; border-radius:10px; padding:7px 10px; white-space:pre-wrap;}
+.todo-card.tap{cursor:pointer;}
+.converter{
+  background:var(--card); border-radius:18px; padding:14px 15px 4px; margin-bottom:6px; box-shadow:var(--shadow);
+}
+.conv-row{display:flex; align-items:center; gap:8px;}
+.conv-row input{margin-bottom:10px; font-size:16px; font-weight:700;}
+.conv-cur{flex:0 0 40px; font-size:12px; font-weight:900; color:var(--ink-soft); text-align:center;}
+.conv-swap{flex:0 0 22px; color:var(--ink-soft); text-align:center; padding-bottom:10px;}
+.cur-toggle{display:flex; gap:8px; margin-bottom:10px;}
+.cur-toggle button{
+  flex:1; border:2px solid var(--line); background:#fff; border-radius:12px; padding:9px;
+  font-size:13px; font-weight:700; font-family:inherit; color:var(--ink-soft); cursor:pointer;
+}
+.cur-toggle button.on{border-color:var(--accent); background:var(--accent-soft); color:var(--accent);}
+.btn-primary:disabled{opacity:.55;}
+input, textarea, select{font-size:16px;} /* 避免 iPhone 點輸入框時自動放大 */
+.full-msg{
+  position:fixed; inset:0; z-index:150; background:#FBF6EC; display:none;
+  align-items:center; justify-content:center; padding:24px; text-align:center;
+}
+.full-msg.open{display:flex;}
+.toast{
+  position:fixed; left:50%; bottom:100px; transform:translateX(-50%); z-index:120;
+  background:var(--ink); color:#fff; font-size:12.5px; line-height:1.5; padding:10px 16px;
+  border-radius:14px; max-width:88%; box-shadow:0 6px 18px rgba(0,0,0,.2); display:none; text-align:center;
+}
+.toast.show{display:block;}
+.photo-loading{display:flex; align-items:center; justify-content:center; gap:8px; height:120px; background:#F2EFE3; border-radius:14px; margin-bottom:10px; font-size:12px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN GATE ===== -->
+<div id="loginGate" style="position:fixed; inset:0; z-index:200; background:#FBF6EC; display:flex; align-items:center; justify-content:center; padding:24px;">
+  <div style="max-width:340px; width:100%; background:#fff; border-radius:24px; padding:32px 26px; box-shadow:4px 4px 0px #E0E5D5; text-align:center;">
+    <div style="width:54px; height:54px; border-radius:16px; background:#3F6B8C; color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; margin:0 auto 16px;">
+      <i class="fa-solid fa-suitcase-rolling"></i>
+    </div>
+    <h1 style="font-size:17px; margin:0 0 4px; font-weight:900;">新加坡家族旅行</h1>
+    <p style="font-size:12px; color:#8A8275; margin:0 0 22px;">請輸入密碼進入</p>
+    <input type="password" id="loginPwInput" placeholder="密碼" autocomplete="current-password" style="text-align:center; letter-spacing:2px;">
+    <button class="btn-primary" id="loginSubmitBtn" style="margin-top:8px;">進入</button>
+    <p id="loginError" style="color:#C9694F; font-size:11px; margin-top:10px; display:none;">密碼錯誤，請再試一次</p>
+  </div>
+</div>
+
+<!-- ===== 讀取中／讀取失敗 ===== -->
+<div class="full-msg" id="loadMsg">
+  <div style="max-width:320px;">
+    <i class="fa-solid fa-cloud-arrow-down" id="loadIcon" style="font-size:30px; color:#3F6B8C; margin-bottom:12px;"></i>
+    <p id="loadText" style="font-size:13.5px; line-height:1.7; margin:0 0 16px;">正在讀取雲端資料…</p>
+    <button class="btn-primary" id="loadRetry" style="display:none;">重新讀取</button>
+  </div>
+</div>
+
+<div class="app" id="app" style="display:none;">
+
+  <!-- ===== TOPBAR ===== -->
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand" id="brandBtn">
+        <div class="brand-icon"><i class="fa-solid fa-suitcase-rolling"></i></div>
+        <div class="brand-text">
+          <h1 id="tripTitle">新加坡家族旅行</h1>
+          <p id="tripRange"></p>
+          <span class="sync-pill" id="syncPill"><i class="fa-solid fa-cloud"></i> 已同步</span>
+        </div>
+      </div>
+      <div class="countdown">
+        <div class="num" id="countdownNum">--</div>
+        <div class="lbl" id="countdownLbl">天後出發</div>
+      </div>
+    </div>
+    <div class="trip-meta" id="tripMeta"></div>
+  </div>
+
+  <!-- ===== VIEW: 行程 ===== -->
+  <div class="view active" id="view-schedule">
+    <div class="date-scroll" id="dateScroll"></div>
+    <div class="weather-card" id="weatherCard"></div>
+    <div class="sec-title"><i class="fa-solid fa-route"></i> 今日時間軸</div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <!-- ===== VIEW: 預訂 ===== -->
+  <div class="view" id="view-bookings">
+    <div class="sec-title"><i class="fa-solid fa-plane"></i> 機票</div>
+    <div id="flightList"></div>
+    <div class="sec-title"><i class="fa-solid fa-bed"></i> 住宿</div>
+    <div id="hotelList"></div>
+    <div class="sec-title"><i class="fa-solid fa-ticket"></i> 票券 / 憑證</div>
+    <div id="ticketList"></div>
+  </div>
+
+  <!-- ===== VIEW: 待辦 ===== -->
+  <div class="view" id="view-todo">
+    <div class="sec-title"><i class="fa-solid fa-list-check"></i> 出發前待辦</div>
+    <div id="todoList"></div>
+    <div class="sec-title"><i class="fa-solid fa-suitcase"></i> 行李清單</div>
+    <div id="packList"></div>
+    <div class="sec-title"><i class="fa-solid fa-cart-shopping"></i> 購買清單</div>
+    <div id="shopList"></div>
+  </div>
+
+  <!-- ===== VIEW: 記帳 ===== -->
+  <div class="view" id="view-expense">
+    <div class="expense-dashboard" id="expenseDashboard"></div>
+    <div class="sec-title"><i class="fa-solid fa-calculator"></i> 新幣 ⇄ 台幣 試算</div>
+    <div class="converter">
+      <div class="conv-row">
+        <div class="conv-cur">SGD</div>
+        <input type="number" inputmode="decimal" id="convSgd" placeholder="0">
+        <div class="conv-swap"><i class="fa-solid fa-right-left"></i></div>
+        <input type="number" inputmode="decimal" id="convTwd" placeholder="0">
+        <div class="conv-cur">NT$</div>
+      </div>
+    </div>
+    <div class="sec-title"><i class="fa-solid fa-receipt"></i> 支出明細</div>
+    <div id="expenseList"></div>
+  </div>
+
+</div>
+
+<button class="add-fab" id="addFab" style="display:none;"><i class="fa-solid fa-plus"></i></button>
+
+<!-- ===== BOTTOM NAV ===== -->
+<div class="bottomnav" id="bottomNav" style="display:none;">
+  <div class="bottomnav-inner">
+    <div class="nav-btn active" data-view="schedule"><i class="fa-solid fa-calendar-days"></i><span>行程</span></div>
+    <div class="nav-btn" data-view="bookings"><i class="fa-solid fa-book-bookmark"></i><span>預訂</span></div>
+    <div class="nav-btn" data-view="todo"><i class="fa-solid fa-list-check"></i><span>待辦</span></div>
+    <div class="nav-btn" data-view="expense"><i class="fa-solid fa-wallet"></i><span>記帳</span></div>
+  </div>
+</div>
+
+<!-- ===== Modal ===== -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal-sheet" id="modalSheet" style="position:relative;">
+    <div class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></div>
+    <div class="modal-handle"></div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ CONFIG ============ */
+/* 只需要改這一行：換成你的 Cloudflare Worker 網址（結尾不要加斜線） */
+const WORKER_API = 'https://sg-trip.candytang315.workers.dev';
+
+/* 新加坡座標（天氣預報用） */
+const SG_LAT = 1.29, SG_LON = 103.85;
+
+/* ============ 小工具 ============ */
+const $ = id => document.getElementById(id);
+function esc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function toast(msg, ms=3200){
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove('show'), ms);
+}
+const fmt = (n, d=0) => Number(n||0).toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
+
+/* 登入憑證：只存「登入通行證」，行程資料全部在雲端。
+   就算瀏覽器資料被清掉，也只是需要重新輸入密碼，資料不會不見。 */
+const TOKEN_KEY = 'sg_trip_token';
+let memToken = '';
+function getToken(){ try{ return localStorage.getItem(TOKEN_KEY) || memToken; }catch(e){ return memToken; } }
+function setToken(t){ memToken = t; try{ t ? localStorage.setItem(TOKEN_KEY, t) : localStorage.removeItem(TOKEN_KEY); }catch(e){} }
+
+/* ============ API ============ */
+async function api(path, opts={}){
+  const res = await fetch(WORKER_API + path, {
+    ...opts,
+    headers: {'Content-Type':'application/json', 'Authorization':'Bearer '+getToken(), ...(opts.headers||{})}
+  });
+  if(res.status === 401){ setToken(''); showLogin('登入已過期，請重新輸入密碼'); throw new Error('unauthorized'); }
+  let body = {};
+  try{ body = await res.json(); }catch(e){}
+  if(res.status === 409) { const err = new Error('conflict'); err.conflict = true; throw err; }
+  if(!res.ok || body.ok === false) throw new Error(body.error || ('HTTP '+res.status));
+  return body;
+}
+function photoUrl(id){ return `${WORKER_API}/photo/${encodeURIComponent(id)}?t=${encodeURIComponent(getToken())}`; }
+
+/* ============ LOGIN ============ */
+function showLogin(msg){
+  $('loginGate').style.display = 'flex';
+  $('app').style.display = 'none'; $('addFab').style.display = 'none'; $('bottomNav').style.display = 'none';
+  $('loadMsg').classList.remove('open');
+  const er = $('loginError');
+  if(msg){ er.textContent = msg; er.style.display = 'block'; } else er.style.display = 'none';
+}
+$('loginSubmitBtn').onclick = async ()=>{
+  const btn = $('loginSubmitBtn'), er = $('loginError');
+  const pw = $('loginPwInput').value;
+  if(!pw) return;
+  btn.textContent = '驗證中...'; btn.disabled = true; er.style.display = 'none';
+  try{
+    const res = await fetch(`${WORKER_API}/login`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({password: pw})});
+    const data = await res.json().catch(()=>({}));
+    if(data.ok){
+      setToken(data.token);
+      $('loginPwInput').value = '';
+      $('loginGate').style.display = 'none';
+      await loadData();
+    } else {
+      er.textContent = '密碼錯誤，請再試一次'; er.style.display = 'block';
+    }
+  }catch(e){
+    er.textContent = '連線失敗，請檢查網路後再試'; er.style.display = 'block';
+  }
+  btn.textContent = '進入'; btn.disabled = false;
+};
+$('loginPwInput').addEventListener('keydown', e=>{ if(e.key==='Enter') $('loginSubmitBtn').click(); });
+
+/* ============ STATE ============ */
+let D = null;          // 雲端資料
+let sha = null;        // 雲端版本，用來避免兩台手機互相覆蓋
+let selectedDate = null;
+let tripDates = [];
+
+/* ============ 讀取雲端 ============ */
+async function loadData(){
+  $('loginGate').style.display = 'none';
+  const box = $('loadMsg');
+  box.classList.add('open');
+  $('loadIcon').className = 'fa-solid fa-cloud-arrow-down';
+  $('loadText').textContent = '正在讀取雲端資料…';
+  $('loadRetry').style.display = 'none';
+  try{
+    const res = await api('/data');
+    D = normalize(res.data || {});
+    sha = res.sha;
+    box.classList.remove('open');
+    $('app').style.display = 'block'; $('addFab').style.display = 'flex'; $('bottomNav').style.display = 'flex';
+    buildDates();
+    if(!selectedDate || !tripDates.find(d=>d.date===selectedDate)) selectedDate = pickInitialDate();
+    renderAll();
+    setSync('saved');
+  }catch(e){
+    if(e.message === 'unauthorized') return;
+    // 讀不到就停在這裡，不顯示可編輯畫面，避免用空資料蓋掉雲端
+    $('loadIcon').className = 'fa-solid fa-cloud-bolt';
+    $('loadText').innerHTML = '雲端資料讀取失敗<br><span style="font-size:11.5px; color:var(--ink-soft);">為了保護你的資料，讀取成功前不會開放編輯。<br>請確認網路後再試一次。</span>';
+    $('loadRetry').style.display = 'block';
+  }
+}
+$('loadRetry').onclick = loadData;
+
+function normalize(d){
+  d.trip = d.trip || {title:'新加坡家族旅行', start:'', end:'', members:'', purpose:'', tags:{}};
+  d.trip.tags = d.trip.tags || {};
+  ['flights','hotels','tickets','todos','packs','shops','expenses'].forEach(k=>{ if(!Array.isArray(d[k])) d[k] = []; });
+  d.schedule = d.schedule || {};
+  Object.values(d.schedule).forEach(list=> list.forEach(it=>{ if(!it.id) it.id = uid(); }));
+  ['flights','hotels','tickets','expenses'].forEach(k=> d[k].forEach(it=>{ if(!it.id) it.id = uid(); }));
+  d.expenses.forEach(e=>{ if(!e.cur) e.cur = 'SGD'; });
+  d.rate = Number(d.rate) > 0 ? Number(d.rate) : 25.1;
+  return d;
+}
+
+/* ============ 儲存雲端（自動、延遲合併） ============ */
+let saveTimer = null, saving = false, dirty = false;
+function save(){
+  dirty = true;
+  setSync('saving');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flush, 700);
+}
+async function flush(){
+  if(saving || !dirty) return;
+  saving = true; dirty = false;
+  try{
+    const res = await api('/data', {method:'POST', body: JSON.stringify({data: D, sha})});
+    sha = res.sha;
+    setSync(dirty ? 'saving' : 'saved');
+  }catch(e){
+    if(e.conflict){
+      // 另一台裝置先存過：載入最新版，請使用者重做剛才的修改
+      try{
+        const res = await api('/data');
+        D = normalize(res.data); sha = res.sha; dirty = false;
+        buildDates(); renderAll(); setSync('saved');
+        toast('家人剛在另一台手機更新過，已載入最新資料。你剛才的修改沒有存到，請再做一次。', 6000);
+      }catch(err){ dirty = true; setSync('error'); }
+    } else if(e.message !== 'unauthorized'){
+      dirty = true; setSync('error');
+    }
+  }
+  saving = false;
+  if(dirty && $('syncPill').dataset.state !== 'error') saveTimer = setTimeout(flush, 300);
+}
+function setSync(s){
+  const p = $('syncPill'); p.dataset.state = s; p.className = 'sync-pill' + (s==='saved'?'':' '+s);
+  p.innerHTML = s==='saving' ? '<i class="fa-solid fa-rotate"></i> 儲存中…'
+             : s==='error' ? '<i class="fa-solid fa-triangle-exclamation"></i> 未儲存，點此重試'
+             : '<i class="fa-solid fa-cloud"></i> 已同步';
+}
+$('syncPill').onclick = (e)=>{ e.stopPropagation(); if($('syncPill').dataset.state==='error'){ setSync('saving'); flush(); } };
+window.addEventListener('beforeunload', e=>{ if(dirty || saving){ e.preventDefault(); e.returnValue=''; } });
+/* 切回這個分頁時，若沒有未存的修改，順便抓最新資料（家人可能改過） */
+document.addEventListener('visibilitychange', async ()=>{
+  if(document.visibilityState !== 'visible' || !D || dirty || saving || !getToken()) return;
+  try{
+    const res = await api('/data');
+    if(res.sha !== sha && !dirty && !saving){ D = normalize(res.data); sha = res.sha; buildDates(); renderAll(); }
+  }catch(e){}
+});
+
+/* ============ 日期 ============ */
+const DOW = ['日','一','二','三','四','五','六'];
+function buildDates(){
+  tripDates = [];
+  const s = D.trip.start, e = D.trip.end;
+  if(!s || !e) return;
+  let cur = new Date(s+'T00:00:00Z'); const end = new Date(e+'T00:00:00Z');
+  let guard = 0;
+  while(cur <= end && guard++ < 30){
+    const iso = cur.toISOString().slice(0,10);
+    tripDates.push({date: iso, m: cur.getUTCMonth()+1, day: cur.getUTCDate(), dow: DOW[cur.getUTCDay()], tag: D.trip.tags[iso]||''});
+    cur = new Date(cur.getTime() + 86400000);
+  }
+}
+function sgToday(){ return new Date(Date.now() + 8*3600000).toISOString().slice(0,10); }
+function pickInitialDate(){
+  const t = sgToday();
+  return (tripDates.find(d=>d.date===t) || tripDates[0] || {}).date || null;
+}
+
+/* ============ RENDER ALL ============ */
+function renderAll(){
+  renderHeader(); renderDateScroll(); renderWeather(); renderTimeline();
+  renderFlights(); renderHotels(); renderTickets();
+  renderTodos(); renderPacks(); renderShops();
+  renderExpenseDashboard(); renderExpenseList(); syncConverter('sgd');
+}
+
+/* ============ HEADER ============ */
+function renderHeader(){
+  const t = D.trip;
+  $('tripTitle').textContent = t.title || '新加坡家族旅行';
+  document.title = t.title || '新加坡家族旅行';
+  $('tripRange').textContent = (t.start && t.end) ? `${t.start.replace(/-/g,'.')} – ${t.end.slice(5).replace('-','.')}` : '點這裡設定旅程日期';
+  const meta = [];
+  if(t.members) meta.push(`<b>成員</b>　${esc(t.members)}`);
+  if(t.purpose) meta.push(`<b>目的</b>　${esc(t.purpose)}`);
+  $('tripMeta').innerHTML = meta.join('<br>');
+  $('tripMeta').style.display = meta.length ? 'block' : 'none';
+
+  if(t.start){
+    const diff = Math.round((new Date(t.start+'T00:00:00Z') - new Date(sgToday()+'T00:00:00Z'))/86400000);
+    const endDiff = t.end ? Math.round((new Date(t.end+'T00:00:00Z') - new Date(sgToday()+'T00:00:00Z'))/86400000) : 0;
+    if(diff > 0){ $('countdownNum').textContent = diff; $('countdownLbl').textContent = '天後出發'; }
+    else if(endDiff >= 0){ $('countdownNum').textContent = 'DAY' + (1-diff); $('countdownLbl').textContent = '旅行中'; }
+    else { $('countdownNum').textContent = '✓'; $('countdownLbl').textContent = '已回家'; }
+  }
+}
+$('brandBtn').onclick = openTripModal;
+function openTripModal(){
+  const t = D.trip;
+  openModal(`
+    <h2 style="margin:6px 0 14px; font-size:17px;">旅程資訊</h2>
+    <label>名稱</label><input type="text" id="tpTitle" value="${esc(t.title)}">
+    <label>出發日</label><input type="date" id="tpStart" value="${esc(t.start)}">
+    <label>回程日</label><input type="date" id="tpEnd" value="${esc(t.end)}">
+    <label>成員</label><input type="text" id="tpMembers" value="${esc(t.members)}">
+    <label>目的</label><textarea id="tpPurpose" rows="2">${esc(t.purpose)}</textarea>
+    <button class="btn-primary" id="tpSave">儲存</button>
+  `);
+  $('tpSave').onclick = ()=>{
+    const s = $('tpStart').value, e = $('tpEnd').value;
+    if(s && e && e < s){ toast('回程日不能早於出發日'); return; }
+    Object.assign(D.trip, {title:$('tpTitle').value.trim(), start:s, end:e, members:$('tpMembers').value.trim(), purpose:$('tpPurpose').value.trim()});
+    buildDates();
+    if(!tripDates.find(d=>d.date===selectedDate)) selectedDate = pickInitialDate();
+    save(); renderAll(); closeModal();
+  };
+}
+
+/* ============ DATE SCROLLER ============ */
+function renderDateScroll(){
+  const el = $('dateScroll');
+  el.innerHTML = tripDates.map((d,i)=>`
+    <div class="date-chip ${d.date===selectedDate?'active':''}" data-date="${d.date}">
+      <div class="daynum">DAY${i+1}</div>
+      <div class="day">${d.m}/${d.day}</div>
+      <div class="dow">星期${d.dow}</div>
+    </div>`).join('');
+  el.querySelectorAll('.date-chip').forEach(chip=>{
+    chip.onclick = ()=>{ selectedDate = chip.dataset.date; renderDateScroll(); renderWeather(); renderTimeline(); };
+  });
+  const act = el.querySelector('.date-chip.active');
+  if(act) act.scrollIntoView({block:'nearest', inline:'center'});
+}
+
+/* ============ WEATHER（出發前 16 天內自動換成即時預報） ============ */
+let forecast = null, forecastTried = false;
+const WCODE = [
+  [[0],'晴朗','fa-sun'], [[1,2],'晴時多雲','fa-cloud-sun'], [[3],'多雲','fa-cloud'],
+  [[45,48],'霧','fa-smog'], [[51,53,55,56,57],'毛毛雨','fa-cloud-rain'],
+  [[61,63,65,66,67,80,81,82],'陣雨','fa-cloud-showers-heavy'], [[95,96,99],'雷陣雨','fa-cloud-bolt']
+];
+function codeInfo(c){ const f = WCODE.find(x=>x[0].includes(c)); return f ? {desc:f[1], icon:f[2]} : {desc:'多雲', icon:'fa-cloud'}; }
+async function loadForecast(){
+  forecastTried = true;
+  try{
+    const u = `https://api.open-meteo.com/v1/forecast?latitude=${SG_LAT}&longitude=${SG_LON}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,uv_index_max&timezone=Asia%2FSingapore&forecast_days=16`;
+    const r = await fetch(u); const j = await r.json();
+    forecast = {};
+    j.daily.time.forEach((t,i)=>{
+      forecast[t] = {code:j.daily.weather_code[i], max:Math.round(j.daily.temperature_2m_max[i]), min:Math.round(j.daily.temperature_2m_min[i]),
+        rain:j.daily.precipitation_probability_max[i], sunrise:(j.daily.sunrise[i]||'').slice(11,16), uv:Math.round(j.daily.uv_index_max[i]||0)};
+    });
+    renderWeather();
+  }catch(e){ forecast = null; }
+}
+function renderWeather(){
+  const el = $('weatherCard');
+  if(!selectedDate){ el.innerHTML = ''; return; }
+  if(!forecastTried) loadForecast();
+  const f = forecast && forecast[selectedDate];
+  // 沒有預報時，用新加坡 11 月氣候平均
+  const w = f ? {...codeInfo(f.code), temp:f.max, low:f.min, rain:f.rain, sunrise:f.sunrise, uv:f.uv, live:true}
+              : {desc:'午後雷陣雨', icon:'fa-cloud-bolt', temp:31, low:25, rain:70, sunrise:'06:48', uv:10, live:false};
+  let advice = '透氣排汗、淺色衣物；室內冷氣強，帶一件薄外套。';
+  if(w.rain >= 50) advice = '午後容易下雷陣雨，戶外行程排在上午，隨身帶摺疊傘或輕便雨衣。室內冷氣強，帶一件薄外套。';
+  if(w.uv >= 8) advice += '紫外線很強，記得防曬、戴帽子。';
+  el.innerHTML = `
+    <div class="weather-top">
+      <div>
+        <div class="weather-loc-tag"><i class="fa-solid fa-location-dot"></i> SINGAPORE</div>
+        <div class="weather-desc-row"><i class="fa-solid ${w.icon} weather-icon"></i><span class="weather-desc-main">${w.desc}</span></div>
+      </div>
+      <div style="text-align:right;">
+        <div class="weather-temp-big">${w.temp}°</div>
+        <div class="weather-temp-range">${w.low}° / ${w.temp}°</div>
+      </div>
+    </div>
+    <div class="weather-stats">
+      <div class="weather-stat"><i class="fa-solid fa-droplet"></i><div class="val">${w.rain}%</div><div class="lbl">降雨機率</div></div>
+      <div class="weather-stat"><i class="fa-solid fa-sun-plant-wilt"></i><div class="val">${w.uv}</div><div class="lbl">紫外線</div></div>
+      <div class="weather-stat"><i class="fa-solid fa-sun"></i><div class="val">${w.sunrise}</div><div class="lbl">日出</div></div>
+    </div>
+    <div class="weather-advice">
+      <i class="fa-solid fa-shirt"></i>
+      <div class="weather-advice-text"><b>OUTFIT ADVICE 穿搭建議</b>${advice}</div>
+    </div>
+    <div class="weather-source">${w.live ? '即時預報 · Open-Meteo' : '11 月氣候平均（出發前 16 天內自動換成即時預報）'}</div>`;
+}
+
+/* ============ TIMELINE ============ */
+const CAT_LABEL = {food:'美食', spot:'景點', transport:'交通', stay:'住宿'};
+const CAT_ICON = {food:'fa-utensils', spot:'fa-map-pin', transport:'fa-train-subway', stay:'fa-bed'};
+const toMin = t => { const m = (t||'').match(/^(\d{1,2}):(\d{2})$/); return m ? parseInt(m[1])*60+parseInt(m[2]) : 9999; };
+
+function dayList(){ return selectedDate ? (D.schedule[selectedDate] = D.schedule[selectedDate] || []) : []; }
+function renderTimeline(){
+  const el = $('timeline');
+  // 用 id 排序與編輯，修正東京版「排序後編輯到錯誤項目」的問題
+  const items = [...dayList()].sort((a,b)=> toMin(a.time) - toMin(b.time));
+  if(!items.length){ el.innerHTML = `<div class="empty-state"><i class="fa-solid fa-mug-hot"></i><p>這天還沒有安排行程，點右下角＋新增</p></div>`; return; }
+  el.innerHTML = items.map((it,i)=>`
+    <div class="tl-item" data-id="${it.id}">
+      <div class="tl-time">${esc(it.time)}</div>
+      <div class="tl-line"><div class="tl-dot cat-${it.cat}"></div>${i<items.length-1?'<div class="tl-bar"></div>':''}</div>
+      <div class="tl-card">
+        <span class="tl-cat cat-${it.cat}"><i class="fa-solid ${CAT_ICON[it.cat]||'fa-map-pin'}"></i> ${CAT_LABEL[it.cat]||''}</span>
+        <p class="tl-title">${esc(it.title)}</p>
+        ${it.sub?`<p class="tl-sub">${esc(it.sub)}</p>`:''}
+        ${it.note?`<div class="tl-note"><i class="fa-solid fa-pen" style="margin-top:2px;"></i><span style="white-space:pre-wrap;">${esc(it.note)}</span></div>`:''}
+      </div>
+    </div>`).join('');
+  el.querySelectorAll('.tl-item').forEach(n=> n.onclick = ()=> openScheduleDetail(n.dataset.id));
+}
+function openScheduleDetail(id){
+  const it = dayList().find(x=>x.id===id); if(!it) return;
+  openModal(`
+    <span class="tl-cat cat-${it.cat}" style="margin-bottom:12px;"><i class="fa-solid ${CAT_ICON[it.cat]}"></i> ${CAT_LABEL[it.cat]}</span>
+    <h2 style="margin:6px 0 4px; font-size:19px;">${esc(it.title)}</h2>
+    <p style="color:var(--ink-soft); font-size:13px; margin:0 0 14px;">${esc(it.time)} ・ ${selectedDate}</p>
+    ${it.sub?`<p style="font-size:13.5px; line-height:1.7; white-space:pre-wrap;">${esc(it.sub)}</p>`:''}
+    ${it.note?`<div class="tl-note" style="margin-top:14px;"><i class="fa-solid fa-pen" style="margin-top:2px;"></i><span style="white-space:pre-wrap;">${esc(it.note)}</span></div>`:''}
+    <div style="display:flex; gap:8px; margin-top:18px;">
+      <button class="btn-primary" style="background:var(--blue);" id="mapBtn"><i class="fa-solid fa-location-dot"></i> 開啟地圖</button>
+      <button class="btn-primary" id="editBtn"><i class="fa-solid fa-pen"></i> 編輯</button>
+    </div>`);
+  $('mapBtn').onclick = ()=> window.open('https://www.google.com/maps/search/'+encodeURIComponent(it.title+' Singapore'),'_blank');
+  $('editBtn').onclick = ()=> openScheduleForm(id);
+}
+function openScheduleForm(id){
+  const it = id ? dayList().find(x=>x.id===id) : {time:'', cat:'spot', title:'', sub:'', note:''};
+  const catOptions = Object.keys(CAT_LABEL).map(k=>`<option value="${k}" ${k===it.cat?'selected':''}>${CAT_LABEL[k]}</option>`).join('');
+  const dateOptions = tripDates.map(d=>`<option value="${d.date}" ${d.date===selectedDate?'selected':''}>${d.m}/${d.day}（${d.dow}）</option>`).join('');
+  openModal(`
+    <h2 style="margin:6px 0 14px; font-size:17px;">${id?'編輯行程':'新增行程'}</h2>
+    <label>日期</label><select id="sDate">${dateOptions}</select>
+    <label>時間（例如 14:00，會自動排序）</label><input type="text" id="sTime" value="${esc(it.time)}" placeholder="14:00">
+    <label>類別</label><select id="sCat">${catOptions}</select>
+    <label>標題</label><input type="text" id="sTitle" value="${esc(it.title)}" placeholder="例如：魚尾獅公園">
+    <label>說明</label><textarea id="sSub" rows="2">${esc(it.sub)}</textarea>
+    <label>備註（選填）</label><textarea id="sNote" rows="2">${esc(it.note||'')}</textarea>
+    <button class="btn-primary" id="sSave">${id?'儲存':'新增'}</button>
+    ${id?'<button class="btn-primary" id="sDel" style="background:#D9A0A0; margin-top:8px;">刪除這個行程</button>':''}`);
+  $('sSave').onclick = ()=>{
+    const title = $('sTitle').value.trim(); if(!title){ toast('請輸入標題'); return; }
+    const data = {time:$('sTime').value.trim().replace('：',':'), cat:$('sCat').value, title, sub:$('sSub').value.trim(), note:$('sNote').value.trim()};
+    const newDate = $('sDate').value;
+    if(id){
+      const list = dayList(); const idx = list.findIndex(x=>x.id===id);
+      if(newDate === selectedDate) Object.assign(list[idx], data);
+      else { list.splice(idx,1); (D.schedule[newDate] = D.schedule[newDate]||[]).push({id, ...data}); }
+    } else {
+      (D.schedule[newDate] = D.schedule[newDate]||[]).push({id:uid(), ...data});
+    }
+    selectedDate = newDate;
+    save(); renderDateScroll(); renderWeather(); renderTimeline(); closeModal();
+  };
+  if(id) $('sDel').onclick = ()=> confirmDelete(()=>{
+    D.schedule[selectedDate] = dayList().filter(x=>x.id!==id);
+    save(); renderTimeline(); closeModal();
+  });
+}
+
+/* 刪除前再確認一次（不用跳出式對話框） */
+function confirmDelete(fn){
+  const btns = document.querySelectorAll('#modalContent .btn-primary');
+  const delBtn = [...btns].find(b=>b.textContent.includes('刪除'));
+  if(delBtn && !delBtn.dataset.armed){ delBtn.dataset.armed = '1'; delBtn.textContent = '確定要刪除？再按一次'; delBtn.style.background = 'var(--accent)'; return; }
+  fn();
+}
+
+/* ============ BOOKINGS ============ */
+const COLOR_MAP = {gold:'var(--gold)', green:'var(--green)', blue:'var(--blue)', accent:'var(--accent)'};
+const COLOR_SOFT_MAP = {gold:'var(--gold-soft)', green:'var(--green-soft)', blue:'var(--blue-soft)', accent:'var(--accent-soft)'};
+const HOTEL_COLORS = ['gold','green','blue','accent'];
+
+function renderFlights(){
+  const el = $('flightList');
+  if(!D.flights.length){ el.innerHTML = `<div class="empty-state"><i class="fa-solid fa-plane"></i><p>還沒有機票，點右下角＋新增</p></div>`; return; }
+  el.innerHTML = D.flights.map(f=>`
+    <div class="boarding-pass" data-id="${f.id}">
+      <div class="bp-top">
+        <div><div class="bp-airline">${esc(f.airline)}</div><div class="bp-flight">${esc(f.flight)}</div></div>
+        <i class="fa-solid fa-plane" style="font-size:18px; opacity:.6;"></i>
+      </div>
+      <div class="bp-route">
+        <div><div class="bp-city">${esc(f.from)}</div><div class="bp-city-sub">${esc(f.fromName)}</div></div>
+        <div class="bp-plane"><i class="fa-solid fa-arrow-right-long"></i></div>
+        <div style="text-align:right;"><div class="bp-city">${esc(f.to)}</div><div class="bp-city-sub">${esc(f.toName)}</div></div>
+      </div>
+      <div class="bp-bottom">
+        <div class="bp-field">日期<b>${esc(f.date)}</b></div>
+        <div class="bp-field">起飛<b>${esc(f.dep)}</b></div>
+        <div class="bp-field">抵達<b>${esc(f.arr)}</b></div>
+        <div class="bp-field">艙等<b>${esc(f.seat)}</b></div>
+      </div>
+      ${f.note?`<div style="margin-top:10px; font-size:11px; opacity:.75; white-space:pre-wrap;">${esc(f.note)}</div>`:''}
+    </div>`).join('');
+  el.querySelectorAll('.boarding-pass').forEach(n=> n.onclick = ()=> openFlightForm(n.dataset.id));
+}
+function openFlightForm(id){
+  const f = id ? D.flights.find(x=>x.id===id) : {airline:'EVA AIR 長榮航空', flight:'BR', from:'', fromName:'', to:'', toName:'', date:'', dep:'', arr:'', seat:'經濟艙', note:''};
+  const field = (k, l, ph='') => `<label>${l}</label><input type="text" id="fl_${k}" value="${esc(f[k]||'')}" placeholder="${ph}">`;
+  openModal(`
+    <h2 style="margin:6px 0 14px; font-size:17px;">${id?'編輯機票':'新增機票'}</h2>
+    ${field('airline','航空公司')}${field('flight','航班號碼','例如：BR225')}
+    <div style="display:flex; gap:8px;"><div style="flex:1">${field('from','出發代碼','TPE')}</div><div style="flex:1">${field('fromName','出發地','桃園 T2')}</div></div>
+    <div style="display:flex; gap:8px;"><div style="flex:1">${field('to','抵達代碼','SIN')}</div><div style="flex:1">${field('toName','抵達地','樟宜')}</div></div>
+    ${field('date','日期','11.26 (四)')}
+    <div style="display:flex; gap:8px;"><div style="flex:1">${field('dep','起飛','07:25')}</div><div style="flex:1">${field('arr','抵達','12:05')}</div></div>
+    ${field('seat','艙等')}
+    <label>備註（訂位代號、座位等）</label><textarea id="fl_note" rows="2">${esc(f.note||'')}</textarea>
+    <button class="btn-primary" id="flSave">${id?'儲存':'新增'}</button>
+    ${id?'<button class="btn-primary" id="flDel" style="background:#D9A0A0; margin-top:8px;">刪除這張機票</button>':''}`);
+  $('flSave').onclick = ()=>{
+    const v = {}; ['airline','flight','from','fromName','to','toName','date','dep','arr','seat','note'].forEach(k=> v[k] = $('fl_'+k).value.trim());
+    v.from = v.from.toUpperCase(); v.to = v.to.toUpperCase();
+    if(id) Object.assign(f, v); else D.flights.push({id:uid(), ...v});
+    save(); renderFlights(); closeModal();
+  };
+  if(id) $('flDel').onclick = ()=> confirmDelete(()=>{ D.flights = D.flights.filter(x=>x.id!==id); save(); renderFlights(); closeModal(); });
+}
+
+function renderHotels(){
+  const el = $('hotelList');
+  if(!D.hotels.length){ el.innerHTML = `<div class="empty-state"><i class="fa-solid fa-bed"></i><p>還沒有住宿，點右下角＋新增</p></div>`; return; }
+  el.innerHTML = D.hotels.map((h,i)=>{
+    const c = HOTEL_COLORS[i % HOTEL_COLORS.length];
+    const img = h.photoId ? photoUrl(h.photoId) : (h.photo || '');
+    return `
+    <div class="booking-card tap" data-id="${h.id}">
+      ${img?`<img class="bk-photo" src="${esc(img)}" alt="" onerror="this.style.display='none'">`:''}
+      <div class="bk-head">
+        <div class="bk-icon" style="background:${COLOR_SOFT_MAP[c]}; color:${COLOR_MAP[c]};"><i class="fa-solid fa-hotel"></i></div>
+        <div><div class="bk-title">${esc(h.name)}</div><div class="bk-sub">${esc(h.nights)}</div></div>
+      </div>
+      <div class="bk-row"><span class="k">Check-in</span><span class="v">${esc(h.checkin)}</span></div>
+      <div class="bk-row"><span class="k">Check-out</span><span class="v">${esc(h.checkout)}</span></div>
+      <div class="bk-row"><span class="k">地址</span><span class="v">${esc(h.addr)}</span></div>
+      ${h.price?`<div class="bk-split"><span>房價</span><b>${esc(h.price)}</b></div>`:''}
+      ${h.note?`<div class="bk-note">${esc(h.note)}</div>`:''}
+    </div>`;
+  }).join('');
+  el.querySelectorAll('.booking-card').forEach(n=> n.onclick = ()=> openHotelDetail(n.dataset.id));
+}
+function openHotelDetail(id){
+  const h = D.hotels.find(x=>x.id===id); if(!h) return;
+  openModal(`
+    <h2 style="margin:6px 0 4px; font-size:18px;">${esc(h.name)}</h2>
+    <p style="color:var(--ink-soft); font-size:12.5px; margin:0 0 14px;">${esc(h.nights)}</p>
+    <div style="display:flex; gap:8px;">
+      <button class="btn-primary" style="background:var(--blue);" id="hMap"><i class="fa-solid fa-location-dot"></i> 開啟地圖</button>
+      <button class="btn-primary" id="hEdit"><i class="fa-solid fa-pen"></i> 編輯</button>
+    </div>`);
+  $('hMap').onclick = ()=> window.open('https://www.google.com/maps/search/'+encodeURIComponent((h.addr||h.name)+' Singapore'),'_blank');
+  $('hEdit').onclick = ()=> openHotelForm(id);
+}
+function openHotelForm(id){
+  const h = id ? D.hotels.find(x=>x.id===id) : {name:'', nights:'', checkin:'15:00', checkout:'11:00', addr:'', price:'', note:''};
+  let photoId = h.photoId || '', uploading = null;
+  const field = (k,l,ph='') => `<label>${l}</label><input type="text" id="ht_${k}" value="${esc(h[k]||'')}" placeholder="${ph}">`;
+  openModal(`
+    <h2 style="margin:6px 0 14px; font-size:17px;">${id?'編輯住宿':'新增住宿'}</h2>
+    <div id="htPhotoBox">${photoBoxHtml(photoId || h.photo, '飯店照片（選填）')}</div>
+    <input type="file" id="htPhotoInput" accept="image/*" style="display:none;">
+    ${field('name','飯店名稱')}${field('nights','入住期間','11.28 – 11.29（1晚）')}
+    <div style="display:flex; gap:8px;"><div style="flex:1">${field('checkin','Check-in')}</div><div style="flex:1">${field('checkout','Check-out')}</div></div>
+    ${field('addr','地址')}${field('price','房價','SGD 230.34')}
+    <label>備註（訂單編號、房型、取消期限）</label><textarea id="ht_note" rows="3">${esc(h.note||'')}</textarea>
+    <button class="btn-primary" id="htSave">${id?'儲存':'新增'}</button>
+    ${id?'<button class="btn-primary" id="htDel" style="background:#D9A0A0; margin-top:8px;">刪除這筆住宿</button>':''}`);
+  bindPhotoPicker('htPhotoBox','htPhotoInput', p=>{ uploading = p; }, newId=>{ photoId = newId; });
+  $('htSave').onclick = async ()=>{
+    if(uploading){ $('htSave').disabled = true; $('htSave').textContent = '照片上傳中…'; try{ await uploading; }catch(e){} }
+    const v = {}; ['name','nights','checkin','checkout','addr','price','note'].forEach(k=> v[k] = $('ht_'+k).value.trim());
+    if(!v.name){ toast('請輸入飯店名稱'); $('htSave').disabled=false; $('htSave').textContent='儲存'; return; }
+    v.photoId = photoId;
+    if(id) Object.assign(h, v); else D.hotels.push({id:uid(), ...v});
+    save(); renderHotels(); closeModal();
+  };
+  if(id) $('htDel').onclick = ()=> confirmDelete(()=>{ D.hotels = D.hotels.filter(x=>x.id!==id); save(); renderHotels(); closeModal(); });
+}
+
+function renderTickets(){
+  const el = $('ticketList');
+  if(!D.tickets.length){ el.innerHTML = `<div class="empty-state"><i class="fa-solid fa-ticket"></i><p>還沒有票券</p></div>`; return; }
+  el.innerHTML = D.tickets.map((t,i)=>{
+    const c = HOTEL_COLORS[(i+1) % HOTEL_COLORS.length], done = (t.status||'').includes('✓');
+    return `<div class="todo-card tap" data-id="${t.id}">
+      <div class="bk-icon" style="background:${COLOR_SOFT_MAP[c]}; color:${COLOR_MAP[c]};"><i class="fa-solid fa-ticket"></i></div>
+      <div class="todo-text" style="flex:1;">${esc(t.title)}</div>
+      ${t.status?`<div class="todo-due" style="${done?'background:var(--green-soft); color:var(--green);':''}">${esc(t.status)}</div>`:''}
+    </div>`;
+  }).join('');
+  el.querySelectorAll('.todo-card').forEach(n=> n.onclick = ()=> openTicketForm(n.dataset.id));
+}
+function openTicketForm(id){
+  const t = id ? D.tickets.find(x=>x.id===id) : {title:'', status:''};
+  openModal(`
+    <h2 style="margin:6px 0 14px; font-size:17px;">${id?'編輯票券':'新增票券'}</h2>
+    <label>名稱</label><input type="text" id="tkTitle" value="${esc(t.title)}">
+    <label>狀態（已完成可在後面加 ✓）</label><input type="text" id="tkStatus" value="${esc(t.status)}" placeholder="待購買 / 已購買 ✓">
+    <button class="btn-primary" id="tkDone" style="background:var(--green); margin-bottom:8px;"><i class="fa-solid fa-check"></i> 標記為已完成</button>
+    <button class="btn-primary" id="tkSave">${id?'儲存':'新增'}</button>
+    ${id?'<button class="btn-primary" id="tkDel" style="background:#D9A0A0; margin-top:8px;">刪除這張票券</button>':''}`);
+  $('tkDone').onclick = ()=>{ const s = $('tkStatus').value.replace('✓','').trim(); $('tkStatus').value = (s && !/待|未/.test(s) ? s : '已購買') + ' ✓'; };
+  $('tkSave').onclick = ()=>{
+    const v = {title:$('tkTitle').value.trim(), status:$('tkStatus').value.trim()};
+    if(!v.title){ toast('請輸入名稱'); return; }
+    if(id) Object.assign(t, v); else D.tickets.push({id:uid(), ...v});
+    save(); renderTickets(); closeModal();
+  };
+  if(id) $('tkDel').onclick = ()=> confirmDelete(()=>{ D.tickets = D.tickets.filter(x=>x.id!==id); save(); renderTickets(); closeModal(); });
+}
+
+/* ============ 照片（自動壓縮 → 上傳雲端） ============ */
+function photoBoxHtml(src, label){
+  const url = src ? (src.startsWith('data:') ? src : photoUrl(src)) : '';
+  return url
+    ? `<img src="${esc(url)}" id="photoPreview" style="width:100%; max-height:280px; object-fit:contain; border-radius:14px; margin-bottom:6px; background:#F2EFE3; cursor:zoom-in;">
+       <button class="btn-primary" data-pick="1" style="margin-bottom:10px; background:var(--blue);"><i class="fa-solid fa-camera"></i> 更換照片</button>`
+    : `<div data-pick="1" style="display:flex; align-items:center; justify-content:center; background:#F2EFE3; border-radius:14px; height:120px; margin-bottom:10px; cursor:pointer; color:var(--ink-soft); flex-direction:column; gap:6px; font-size:12px;">
+         <i class="fa-solid fa-camera" style="font-size:24px; opacity:.5;"></i>${label}</div>`;
+}
+function bindPhotoPicker(boxId, inputId, onStart, onDone){
+  const box = $(boxId), input = $(inputId);
+  const wire = ()=>{
+    box.querySelectorAll('[data-pick]').forEach(b=> b.onclick = (e)=>{ e.preventDefault(); input.click(); });
+    const pv = box.querySelector('#photoPreview'); if(pv) pv.onclick = ()=> showFullscreenPhoto(pv.src);
+  };
+  wire();
+  input.onchange = async ()=>{
+    const file = input.files[0]; if(!file) return;
+    box.innerHTML = `<div class="photo-loading"><i class="fa-solid fa-spinner fa-spin"></i> 壓縮並上傳中…</div>`;
+    const p = (async ()=>{
+      const dataUrl = await compressImage(file);
+      const res = await api('/photo', {method:'POST', body: JSON.stringify({dataUrl})});
+      return res.id;
+    })();
+    onStart(p);
+    try{
+      const id = await p; onDone(id);
+      box.innerHTML = photoBoxHtml(id, '');
+    }catch(e){
+      box.innerHTML = photoBoxHtml('', '上傳失敗，點此重新選取照片');
+      toast('照片上傳失敗，請確認網路後再試');
+    }
+    onStart(null); input.value = ''; wire();
+  };
+}
+function compressImage(file){
+  return new Promise((resolve, reject)=>{
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = ()=>{
+      const MAX = 1000; let w = img.width, h = img.height;
+      if(w >= h && w > MAX){ h = Math.round(h*MAX/w); w = MAX; } else if(h > MAX){ w = Math.round(w*MAX/h); h = MAX; }
+      const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+      const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0,0,w,h); ctx.drawImage(img,0,0,w,h);
+      URL.revokeObjectURL(url);
+      resolve(cv.toDataURL('image/jpeg', 0.65));
+    };
+    img.onerror = ()=>{ URL.revokeObjectURL(url); reject(new Error('無法讀取這張照片')); };
+    img.src = url;
+  });
+}
+function showFullscreenPhoto(url){
+  const o = document.createElement('div');
+  o.style.cssText = 'position:fixed; inset:0; background:#000; z-index:300; display:flex; align-items:center; justify-content:center;';
+  o.innerHTML = `<img src="${esc(url)}" style="max-width:100%; max-height:100%; object-fit:contain;">
+    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px;"><i class="fa-solid fa-xmark"></i></div>`;
+  o.onclick = ()=> o.remove();
+  document.body.appendChild(o);
+}
+
+/* ============ 待辦／行李／購買清單 ============ */
+const LISTS = {
+  todos: {el:'todoList', empty:'目前沒有待辦事項', icon:'fa-circle-check', hasDue:true, name:'待辦事項'},
+  packs: {el:'packList', empty:'目前沒有行李清單', icon:'fa-suitcase', hasDue:false, name:'行李項目'},
+  shops: {el:'shopList', empty:'目前沒有購買清單', icon:'fa-cart-shopping', hasDue:true, name:'購買項目', photo:true},
+};
+function renderList(group){
+  const cfg = LISTS[group], el = $(cfg.el), list = D[group];
+  if(!list.length){ el.innerHTML = `<div class="empty-state"><i class="fa-solid ${cfg.icon}"></i><p>${cfg.empty}</p></div>`; return; }
+  el.innerHTML = list.map((t,i)=>{
+    const img = t.photoId ? photoUrl(t.photoId) : (t.photo || '');
+    return `<div class="todo-card">
+      <div class="todo-check ${t.done?'done':''}" data-i="${i}"><i class="fa-solid fa-check"></i></div>
+      ${img?`<img src="${esc(img)}" class="shop-thumb" data-i="${i}" onerror="this.style.display='none'">`:''}
+      <div class="todo-text ${t.done?'done':''}" data-i="${i}" style="white-space:pre-wrap; cursor:pointer;">${esc(t.text)}</div>
+      ${t.due?`<div class="todo-due">${esc(t.due)}</div>`:''}
+    </div>`;
+  }).join('');
+  el.querySelectorAll('.todo-check').forEach(c=> c.onclick = ()=>{ const t = list[c.dataset.i]; t.done = !t.done; save(); renderList(group); });
+  el.querySelectorAll('.todo-text, .shop-thumb').forEach(n=> n.onclick = ()=> openItemForm(group, Number(n.dataset.i)));
+}
+const renderTodos = ()=> renderList('todos'), renderPacks = ()=> renderList('packs'), renderShops = ()=> renderList('shops');
+
+function openItemForm(group, idx){
+  const cfg = LISTS[group], isNew = idx == null;
+  const t = isNew ? {text:'', due:'', done:false} : D[group][idx];
+  let photoId = t.photoId || '', uploading = null;
+  openModal(`
+    <h2 style="margin:6px 0 14px; font-size:17px;">${isNew?'新增':'編輯'}${cfg.name}</h2>
+    ${cfg.photo?`<div id="itPhotoBox">${photoBoxHtml(photoId || t.photo, '點此從相簿選取照片（選填）')}</div><input type="file" id="itPhotoInput" accept="image/*" style="display:none;">`:''}
+    <label>內容（可換行）</label><textarea id="itText" rows="3">${esc(t.text)}</textarea>
+    ${cfg.hasDue?`<label>${group==='shops'?'備註（價格或店家）':'期限備註（選填）'}</label><input type="text" id="itDue" value="${esc(t.due||'')}">`:''}
+    <button class="btn-primary" id="itSave">${isNew?'新增':'儲存'}</button>
+    ${!isNew?'<button class="btn-primary" id="itDel" style="background:#D9A0A0; margin-top:8px;">刪除這個項目</button>':''}`);
+  if(cfg.photo) bindPhotoPicker('itPhotoBox','itPhotoInput', p=>{ uploading = p; }, id=>{ photoId = id; });
+  $('itSave').onclick = async ()=>{
+    if(uploading){ $('itSave').disabled = true; $('itSave').textContent = '照片上傳中…'; try{ await uploading; }catch(e){} }
+    const text = $('itText').value.trim();
+    if(!text){ toast('請輸入內容'); $('itSave').disabled = false; $('itSave').textContent = isNew?'新增':'儲存'; return; }
+    const v = {text, due: cfg.hasDue ? $('itDue').value.trim() : ''};
+    if(cfg.photo){ v.photoId = photoId; if(photoId) v.photo = ''; }
+    if(isNew) D[group].unshift({...v, done:false}); else Object.assign(D[group][idx], v);
+    save(); renderList(group); closeModal();
+  };
+  if(!isNew) $('itDel').onclick = ()=> confirmDelete(()=>{ D[group].splice(idx,1); save(); renderList(group); closeModal(); });
+}
+
+/* ============ 記帳（新幣／台幣） ============ */
+const EXP_CATS = {
+  food:{label:'餐飲', icon:'fa-utensils', color:'accent'},
+  transport:{label:'交通', icon:'fa-train-subway', color:'blue'},
+  shopping:{label:'購物', icon:'fa-bag-shopping', color:'green'},
+  ticket:{label:'門票', icon:'fa-ticket', color:'gold'},
+  stay:{label:'住宿', icon:'fa-bed', color:'gold'},
+  other:{label:'其他', icon:'fa-circle-dot', color:'blue'},
+};
+const toTwd = e => e.cur === 'TWD' ? Number(e.amount) : Number(e.amount) * D.rate;
+const amtLabel = e => e.cur === 'TWD' ? `NT$${fmt(e.amount)}` : `S$${fmt(e.amount, 2)}`;
+
+function renderExpenseDashboard(){
+  const totalTwd = D.expenses.reduce((s,e)=> s + toTwd(e), 0);
+  const totalSgdEq = totalTwd / D.rate;
+  const byCat = {};
+  D.expenses.forEach(e=>{ byCat[e.cat] = (byCat[e.cat]||0) + toTwd(e); });
+  const chips = Object.keys(byCat).map(c=>`<div class="expense-cat-chip">${(EXP_CATS[c]||EXP_CATS.other).label}<b>NT$${fmt(byCat[c])}</b></div>`).join('');
+  $('expenseDashboard').innerHTML = `
+    <div class="expense-total-lbl">總支出（換算台幣）</div>
+    <div class="expense-total-num">NT$${fmt(totalTwd)}</div>
+    <div class="expense-total-sub">約 S$${fmt(totalSgdEq, 2)} ・ 1 新幣 =
+      <span id="rateDisplay" style="text-decoration:underline; cursor:pointer;">${D.rate}</span> 台幣</div>
+    ${chips?`<div class="expense-cats">${chips}</div>`:''}`;
+  $('rateDisplay').onclick = ()=>{
+    openModal(`
+      <h2 style="margin:6px 0 14px; font-size:17px;">調整新幣→台幣匯率</h2>
+      <label>1 新幣 = ? 台幣（可依刷卡帳單實際匯率調整）</label>
+      <input type="number" step="0.01" inputmode="decimal" id="rateInput" value="${D.rate}">
+      <button class="btn-primary" id="rateSubmit">儲存</button>`);
+    $('rateSubmit').onclick = ()=>{
+      const v = parseFloat($('rateInput').value);
+      if(v > 0){ D.rate = v; save(); renderExpenseDashboard(); renderExpenseList(); syncConverter('sgd'); closeModal(); }
+    };
+  };
+}
+function renderExpenseList(){
+  const el = $('expenseList');
+  if(!D.expenses.length){ el.innerHTML = `<div class="empty-state"><i class="fa-solid fa-receipt"></i><p>還沒有記帳紀錄，點右下角＋新增</p></div>`; return; }
+  const sorted = [...D.expenses].sort((a,b)=> (b.date||'').localeCompare(a.date||'') || (b.id||'').localeCompare(a.id||''));
+  let last = null, html = '';
+  sorted.forEach(e=>{
+    const info = EXP_CATS[e.cat] || EXP_CATS.other;
+    if(e.date !== last){ html += `<div class="date-divider">${esc(dateLabel(e.date))}</div>`; last = e.date; }
+    html += `<div class="exp-item" data-id="${e.id}">
+      <div class="exp-icon" style="background:${COLOR_SOFT_MAP[info.color]}; color:${COLOR_MAP[info.color]};"><i class="fa-solid ${info.icon}"></i></div>
+      <div class="exp-mid"><div class="exp-title">${info.label}${e.note?' · '+esc(e.note):''}</div><div class="exp-sub">${esc(dateLabel(e.date))}</div></div>
+      <div class="exp-amt">
+        <div class="exp-amt-jpy">${amtLabel(e)}</div>
+        <div class="exp-amt-twd">${e.cur==='TWD' ? '≈S$'+fmt(e.amount/D.rate,2) : '≈NT$'+fmt(toTwd(e))}</div>
+      </div>
+    </div>`;
+  });
+  el.innerHTML = html;
+  el.querySelectorAll('.exp-item').forEach(n=> n.onclick = ()=> openExpenseForm(n.dataset.id));
+}
+function dateLabel(iso){
+  if(!iso) return '行前';
+  const d = tripDates.find(x=>x.date===iso);
+  return d ? `${d.m}/${d.day}（${d.dow}）` : iso;
+}
+function openExpenseForm(id){
+  const e = id ? D.expenses.find(x=>x.id===id) : {date: selectedDate || '', cat:'food', amount:'', cur:'SGD', note:''};
+  let cur = e.cur || 'SGD';
+  const catOptions = Object.keys(EXP_CATS).map(k=>`<option value="${k}" ${k===e.cat?'selected':''}>${EXP_CATS[k].label}</option>`).join('');
+  const dateOptions = `<option value="" ${!e.date?'selected':''}>行前（訂房、門票等）</option>` +
+    tripDates.map(d=>`<option value="${d.date}" ${d.date===e.date?'selected':''}>${d.m}/${d.day}（${d.dow}）</option>`).join('');
+  openModal(`
+    <h2 style="margin:6px 0 14px; font-size:17px;">${id?'編輯支出':'新增支出'}</h2>
+    <label>幣別</label>
+    <div class="cur-toggle"><button data-cur="SGD">新幣 S$</button><button data-cur="TWD">台幣 NT$</button></div>
+    <label id="exAmtLbl">金額</label>
+    <input type="number" inputmode="decimal" step="0.01" id="exAmount" value="${e.amount}" placeholder="例如：12.5">
+    <div id="exConv" style="font-size:11.5px; color:var(--ink-soft); margin:-4px 2px 10px;"></div>
+    <label>日期</label><select id="exDate">${dateOptions}</select>
+    <label>類別</label><select id="exCat">${catOptions}</select>
+    <label>備註（選填）</label><input type="text" id="exNote" value="${esc(e.note||'')}" placeholder="例如：老巴剎沙嗲">
+    <button class="btn-primary" id="exSave">${id?'儲存':'新增記錄'}</button>
+    ${id?'<button class="btn-primary" id="exDel" style="background:#D9A0A0; margin-top:8px;">刪除這筆支出</button>':''}`);
+  const paint = ()=>{
+    document.querySelectorAll('.cur-toggle button').forEach(b=> b.classList.toggle('on', b.dataset.cur===cur));
+    const a = parseFloat($('exAmount').value);
+    $('exConv').textContent = a > 0 ? (cur==='SGD' ? `≈ NT$${fmt(a*D.rate)}` : `≈ S$${fmt(a/D.rate,2)}`) : '';
+  };
+  document.querySelectorAll('.cur-toggle button').forEach(b=> b.onclick = ()=>{ cur = b.dataset.cur; paint(); });
+  $('exAmount').oninput = paint; paint();
+  $('exSave').onclick = ()=>{
+    const amount = parseFloat($('exAmount').value);
+    if(!(amount > 0)){ toast('請輸入金額'); return; }
+    const v = {date:$('exDate').value, cat:$('exCat').value, amount, cur, note:$('exNote').value.trim()};
+    if(id) Object.assign(e, v); else D.expenses.push({id:uid(), ...v});
+    save(); renderExpenseDashboard(); renderExpenseList(); closeModal();
+  };
+  if(id) $('exDel').onclick = ()=> confirmDelete(()=>{ D.expenses = D.expenses.filter(x=>x.id!==id); save(); renderExpenseDashboard(); renderExpenseList(); closeModal(); });
+}
+
+/* 試算器 */
+function syncConverter(from){
+  if(!D) return;
+  if(from === 'sgd'){ const v = parseFloat($('convSgd').value); $('convTwd').value = v>=0 ? Math.round(v*D.rate) : ''; }
+  else { const v = parseFloat($('convTwd').value); $('convSgd').value = v>=0 ? (v/D.rate).toFixed(2) : ''; }
+}
+$('convSgd').oninput = ()=> syncConverter('sgd');
+$('convTwd').oninput = ()=> syncConverter('twd');
+
+/* ============ Modal ============ */
+function openModal(html){ $('modalContent').innerHTML = html; $('modalBg').classList.add('open'); $('modalSheet').scrollTop = 0; }
+function closeModal(){ $('modalBg').classList.remove('open'); }
+$('modalClose').onclick = closeModal;
+$('modalBg').onclick = e=>{ if(e.target.id==='modalBg') closeModal(); };
+
+/* ============ FAB ============ */
+$('addFab').onclick = ()=>{
+  const v = document.querySelector('.view.active').id;
+  if(v === 'view-schedule'){
+    if(!tripDates.length){ openTripModal(); toast('請先設定旅程日期'); return; }
+    openScheduleForm(null); return;
+  }
+  if(v === 'view-expense'){ openExpenseForm(null); return; }
+  if(v === 'view-bookings'){
+    openModal(`
+      <h2 style="margin:6px 0 14px; font-size:17px;">新增哪一種預訂？</h2>
+      <button class="btn-primary" id="addF" style="margin-bottom:8px; background:#3A3633;"><i class="fa-solid fa-plane"></i> 機票</button>
+      <button class="btn-primary" id="addH" style="margin-bottom:8px; background:var(--gold);"><i class="fa-solid fa-bed"></i> 住宿</button>
+      <button class="btn-primary" id="addT" style="background:var(--green);"><i class="fa-solid fa-ticket"></i> 票券 / 憑證</button>`);
+    $('addF').onclick = ()=> openFlightForm(null);
+    $('addH').onclick = ()=> openHotelForm(null);
+    $('addT').onclick = ()=> openTicketForm(null);
+    return;
+  }
+  openModal(`
+    <h2 style="margin:6px 0 14px; font-size:17px;">新增到哪個清單？</h2>
+    <button class="btn-primary" id="addToTodo" style="margin-bottom:8px;"><i class="fa-solid fa-list-check"></i> 出發前待辦</button>
+    <button class="btn-primary" id="addToPack" style="margin-bottom:8px; background:var(--gold);"><i class="fa-solid fa-suitcase"></i> 行李清單</button>
+    <button class="btn-primary" id="addToShop" style="background:var(--green);"><i class="fa-solid fa-cart-shopping"></i> 購買清單</button>`);
+  $('addToTodo').onclick = ()=> openItemForm('todos', null);
+  $('addToPack').onclick = ()=> openItemForm('packs', null);
+  $('addToShop').onclick = ()=> openItemForm('shops', null);
+};
+
+/* ============ Bottom nav ============ */
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    $('view-'+btn.dataset.view).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  };
+});
+
+/* ============ INIT ============ */
+if(getToken()) loadData(); else showLogin();
+</script>
+</body>
+</html>
